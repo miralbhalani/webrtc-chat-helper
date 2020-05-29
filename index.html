@@ -1,0 +1,23 @@
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    <script data-main="/dist/Chat.js" type="text/javascript" 
+            src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
+    <!-- <script src="/node_modules/systemjs/dist/system.js"></script> -->
+    <!-- <script src="/systemjs.config.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/6.3.2/extras/amd.js"></script> -->
+        <script>
+
+            requirejs.config({
+                baseUrl: 'dist/public/browser'
+            });
+
+            require(['Chat'], function(module) {
+                var g = new module.Chat()
+                console.log(g);
+            });
+
+            // console.log(window.Chat);
+            // System.import('components/main');
+        </script>
+</head>

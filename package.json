@@ -1,0 +1,20 @@
+{
+  "name": "socketproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@types/socket.io": "^2.1.8",
+    "@types/socket.io-client": "^1.4.33"
+  },
+  "scripts": {
+    "clean": "npm run clean-build-steps && rm -rf dist",
+    "babel": "./node_modules/.bin/babel build-tsc --out-dir build-babel --source-maps",
+    "webpack": "webpack && cp public/* dist",
+    "clean-build-steps": "rm -rf build-tsc build-babel",
+    "build": "npm run clean && npm run tsc && npm run babel && npm run webpack && npm run clean-build-steps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
