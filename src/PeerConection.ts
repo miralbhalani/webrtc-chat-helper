@@ -45,13 +45,20 @@ export class PeerConnection {
       this.peerConnection.addTrack(track, PeerConnection.stream)
     });
 
+    
+  }
+
+  onRemoteTrack(_onRemoteTrakCB) {
+    let _self = this;
     this.peerConnection.ontrack = function({ streams: [stream] }: any) {
-      const remoteVideo: any = document.getElementById(PeerConnection.getVideoElementID(_self.socketId));
-      if (remoteVideo) {
-        remoteVideo.srcObject = stream;
-      }
+      _onRemoteTrakCB(stream);
+      // const remoteVideo: any = document.getElementById(PeerConnection.getVideoElementID(_self.socketId));
+      // if (remoteVideo) {
+      //   remoteVideo.srcObject = stream;
+      // }
     };
   }
+
 
   listenIceCandidate(iceCandidateListenCb: Function) {
     var _self = this;

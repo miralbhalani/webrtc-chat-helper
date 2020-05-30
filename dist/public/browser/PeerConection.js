@@ -48,13 +48,6 @@ define(["require", "exports"], function (require, exports) {
             PeerConnection.stream.getTracks().forEach(function (track) {
                 _this.peerConnection.addTrack(track, PeerConnection.stream);
             });
-            this.peerConnection.ontrack = function (_a) {
-                var stream = _a.streams[0];
-                var remoteVideo = document.getElementById(PeerConnection.getVideoElementID(_self.socketId));
-                if (remoteVideo) {
-                    remoteVideo.srcObject = stream;
-                }
-            };
         }
         PeerConnection.setStream = function (_stream) {
             this.stream = _stream;
@@ -76,6 +69,17 @@ define(["require", "exports"], function (require, exports) {
         };
         PeerConnection.getVideoElementID = function (socketId) {
             return "remote-video-" + socketId;
+        };
+        PeerConnection.prototype.onRemoteTrack = function (_onRemoteTrakCB) {
+            var _self = this;
+            this.peerConnection.ontrack = function (_a) {
+                var stream = _a.streams[0];
+                _onRemoteTrakCB(stream);
+                // const remoteVideo: any = document.getElementById(PeerConnection.getVideoElementID(_self.socketId));
+                // if (remoteVideo) {
+                //   remoteVideo.srcObject = stream;
+                // }
+            };
         };
         PeerConnection.prototype.listenIceCandidate = function (iceCandidateListenCb) {
             var _self = this;

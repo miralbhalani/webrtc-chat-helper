@@ -34,10 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "./PeerConection"], function (require, exports, PeerConection_1) {
+define(["require", "exports", "./PeerConection", "./PeerConection"], function (require, exports, PeerConection_1, PeerConection_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Chat = void 0;
+    Object.defineProperty(exports, "PeerConnection", { enumerable: true, get: function () { return PeerConection_2.PeerConnection; } });
     // const { RTCPeerConnection, RTCSessionDescription } = window;
     var Chat = /** @class */ (function () {
         function Chat() {
@@ -49,6 +50,9 @@ define(["require", "exports", "./PeerConection"], function (require, exports, Pe
                 });
             };
         }
+        Chat.getLocalStream = function () {
+            return PeerConection_1.PeerConnection.stream;
+        };
         Chat.prototype.connect = function (connectionString) {
             // "localhost:5000"
             this.socket = io.connect(connectionString);
@@ -101,9 +105,10 @@ define(["require", "exports", "./PeerConection"], function (require, exports, Pe
                 });
             }); });
         };
-        Chat.prototype.usMyCameraStream = function () {
+        Chat.prototype.usMyCameraStream = function (_useMyCameraStreamCB) {
             navigator.getUserMedia({ video: true, audio: true }, function (stream) {
                 PeerConection_1.PeerConnection.setStream(stream);
+                _useMyCameraStreamCB(stream);
             }, function (error) {
                 console.warn(error.message);
             });
@@ -125,7 +130,7 @@ define(["require", "exports", "./PeerConection"], function (require, exports, Pe
                                 offer: offer,
                                 to: socketId
                             });
-                            return [2 /*return*/];
+                            return [2 /*return*/, peerConnectionM];
                     }
                 });
             });
