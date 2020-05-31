@@ -20,9 +20,12 @@ export class Chat {
 
     watchOnSocketIds(socketIdsChangeCB: Function) {
         this.socket.on("update-user-list", ({ users }: any) => {
+            console.log('update-user-list > my socketId on userlist', this.mySocketId);
+            console.log('update-user-list > users', users)
             users = users.filter((_user) => {
-                _user != this.mySocketId
+                return _user != this.mySocketId
             })
+            console.log('update-user-list > users after', users)
             socketIdsChangeCB(users);
         });
     }
@@ -34,6 +37,7 @@ export class Chat {
         });
 
         this.socket.on("my-socket-id", async (mySocketId: any) => {
+            console.log('mySocketId', mySocketId)
             this.mySocketId = mySocketId
         });
 

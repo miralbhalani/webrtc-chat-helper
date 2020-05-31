@@ -62,9 +62,12 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
             var _this = this;
             this.socket.on("update-user-list", function (_a) {
                 var users = _a.users;
+                console.log('update-user-list > my socketId on userlist', _this.mySocketId);
+                console.log('update-user-list > users', users);
                 users = users.filter(function (_user) {
-                    _user != _this.mySocketId;
+                    return _user != _this.mySocketId;
                 });
+                console.log('update-user-list > users after', users);
                 socketIdsChangeCB(users);
             });
         };
@@ -80,6 +83,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
             }); });
             this.socket.on("my-socket-id", function (mySocketId) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
+                    console.log('mySocketId', mySocketId);
                     this.mySocketId = mySocketId;
                     return [2 /*return*/];
                 });
