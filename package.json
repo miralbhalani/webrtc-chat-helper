@@ -2,7 +2,7 @@
   "name": "webrtc-chat-helper",
   "version": "1.0.0",
   "description": "It is a library, which has basic and simple interface to implement werbrtc connection between multiple sockets",
-  "main": "index.js",
+  "main": "dist/index.js",
   "devDependencies": {},
   "dependencies": {
     "@types/socket.io": "^2.1.8",
