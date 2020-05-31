@@ -59,7 +59,7 @@ var ServerIO = /** @class */ (function () {
                 });
             });
             socket.on("disconnect", function () {
-                console.log('disconnect > socketId -- ', socket.id);
+                console.log('disconnect > socketId -- -- ', socket.id);
                 console.log('disconnect > this.activeSockets', _this.activeSockets);
                 _this.activeSockets = _this.activeSockets.filter(function (existingSocket) { return existingSocket !== socket.id; });
                 console.log('disconnect > this.activeSockets after', _this.activeSockets);
