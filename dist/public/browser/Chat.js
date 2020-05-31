@@ -77,6 +77,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                 var peerConnectionM;
                 return __generator(this, function (_a) {
                     peerConnectionM = PeerConection_1.PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+                    console.log('add-icecandidate socket on > ', data);
                     peerConnectionM.addIceCandidate(data.iceCandidate);
                     return [2 /*return*/];
                 });

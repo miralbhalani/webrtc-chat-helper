@@ -33,6 +33,7 @@ export class Chat {
     private attachBasicIosToSocket() {
         this.socket.on("add-icecandidate", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+            console.log('add-icecandidate socket on > ',data)
             peerConnectionM.addIceCandidate(data.iceCandidate);
         });
 
