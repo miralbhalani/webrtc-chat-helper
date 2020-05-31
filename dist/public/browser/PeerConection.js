@@ -96,8 +96,11 @@ define(["require", "exports"], function (require, exports) {
                 var newIceCandidate;
                 return __generator(this, function (_a) {
                     console.log("icecandidate --- -- ", iceCandidate);
-                    newIceCandidate = new RTCIceCandidate(iceCandidate);
-                    return [2 /*return*/, this.peerConnection.addIceCandidate(newIceCandidate)];
+                    if (iceCandidate) {
+                        newIceCandidate = new RTCIceCandidate(iceCandidate);
+                        return [2 /*return*/, this.peerConnection.addIceCandidate(newIceCandidate)];
+                    }
+                    return [2 /*return*/];
                 });
             });
         };

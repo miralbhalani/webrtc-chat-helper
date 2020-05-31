@@ -50,11 +50,13 @@ export class ServerIO {
           });
     
           socket.on("call-add-icecandidate", (data: any) => {
-            console.log('call-add-icecandidate', data.to)
-            socket.to(data.to).emit("add-icecandidate", {
-              iceCandidate: data.iceCandidate,
-              socket: socket.id
-            });
+            if(data.iceCandidate) {
+              console.log('call-add-icecandidate', data.to)
+              socket.to(data.to).emit("add-icecandidate", {
+                iceCandidate: data.iceCandidate,
+                socket: socket.id
+              });
+            }
           });
     
           socket.on("make-answer", data => {

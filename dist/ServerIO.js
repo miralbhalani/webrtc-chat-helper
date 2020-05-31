@@ -41,11 +41,13 @@ var ServerIO = /** @class */ (function () {
                 });
             });
             socket.on("call-add-icecandidate", function (data) {
-                console.log('call-add-icecandidate', data.to);
-                socket.to(data.to).emit("add-icecandidate", {
-                    iceCandidate: data.iceCandidate,
-                    socket: socket.id
-                });
+                if (data.iceCandidate) {
+                    console.log('call-add-icecandidate', data.to);
+                    socket.to(data.to).emit("add-icecandidate", {
+                        iceCandidate: data.iceCandidate,
+                        socket: socket.id
+                    });
+                }
             });
             socket.on("make-answer", function (data) {
                 socket.to(data.to).emit("answer-made", {
