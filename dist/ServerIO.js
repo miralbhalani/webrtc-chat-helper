@@ -17,12 +17,17 @@ var ServerIO = /** @class */ (function () {
             var existingSocket = _this.activeSockets.find(function (existingSocket) { return existingSocket === socket.id; });
             if (!existingSocket) {
                 _this.activeSockets.push(socket.id);
-                socket.emit("update-user-list", {
-                    users: _this.activeSockets.filter(function (existingSocket) { return existingSocket !== socket.id; })
-                });
                 socket.broadcast.emit("update-user-list", {
-                    users: [socket.id]
+                    users: _this.activeSockets
                 });
+                // socket.emit("update-user-list", {
+                //   users: this.activeSockets.filter(
+                //     existingSocket => existingSocket !== socket.id
+                //   )
+                // });
+                // socket.broadcast.emit("update-user-list", {
+                //   users: [socket.id]
+                // });
             }
             socket.on("call-user", function (data) {
                 console.log('In call-user', data, socket.id);
@@ -51,9 +56,12 @@ var ServerIO = /** @class */ (function () {
             });
             socket.on("disconnect", function () {
                 _this.activeSockets = _this.activeSockets.filter(function (existingSocket) { return existingSocket !== socket.id; });
-                socket.broadcast.emit("remove-user", {
-                    socketId: socket.id
+                socket.broadcast.emit("update-user-list", {
+                    users: _this.activeSockets
                 });
+                // socket.broadcast.emit("remove-user", {
+                //   socketId: socket.id
+                // });
             });
         });
     };

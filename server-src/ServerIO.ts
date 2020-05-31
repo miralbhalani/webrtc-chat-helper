@@ -21,15 +21,19 @@ export class ServerIO {
           if (!existingSocket) {
             this.activeSockets.push(socket.id);
     
-            socket.emit("update-user-list", {
-              users: this.activeSockets.filter(
-                existingSocket => existingSocket !== socket.id
-              )
-            });
-    
             socket.broadcast.emit("update-user-list", {
-              users: [socket.id]
+              users: this.activeSockets
             });
+            
+            // socket.emit("update-user-list", {
+            //   users: this.activeSockets.filter(
+            //     existingSocket => existingSocket !== socket.id
+            //   )
+            // });
+    
+            // socket.broadcast.emit("update-user-list", {
+            //   users: [socket.id]
+            // });
           }
     
           socket.on("call-user", (data: any) => {
@@ -65,9 +69,14 @@ export class ServerIO {
             this.activeSockets = this.activeSockets.filter(
               existingSocket => existingSocket !== socket.id
             );
-            socket.broadcast.emit("remove-user", {
-              socketId: socket.id
+
+            socket.broadcast.emit("update-user-list", {
+              users: this.activeSockets
             });
+
+            // socket.broadcast.emit("remove-user", {
+            //   socketId: socket.id
+            // });
           });
         });
       }
