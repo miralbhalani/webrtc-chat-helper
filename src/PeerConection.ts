@@ -70,6 +70,7 @@ export class PeerConnection {
   }
 
   async addIceCandidate(iceCandidate: any) {
+    console.log("icecandidate --- -- ", iceCandidate)
     const newIceCandidate = new RTCIceCandidate(iceCandidate);
     return this.peerConnection.addIceCandidate(newIceCandidate)
   }

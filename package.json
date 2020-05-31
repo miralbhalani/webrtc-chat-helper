@@ -14,8 +14,9 @@
     "babel": "./node_modules/.bin/babel build-tsc --out-dir build-babel --source-maps",
     "webpack": "webpack && cp public/* dist",
     "clean-build-steps": "rm -rf build-tsc build-babel",
-    "build": "tsc && tsc --project tsconfig.node.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && tsc --project tsconfig.node.json && rm -r ../webrtc-multiscreen-chat-demo/public/browser && cp -r dist/public/browser ../webrtc-multiscreen-chat-demo/public/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pushchanges": "git add -A && git commit -m 'n changes' && git push"
   },
 
   "repository": {

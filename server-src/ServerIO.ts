@@ -72,7 +72,7 @@ export class ServerIO {
     
           socket.on("disconnect", () => {
 
-            console.log('disconnect > socketId', socket.id);
+            console.log('disconnect > socketId -- ', socket.id);
             console.log('disconnect > this.activeSockets', this.activeSockets);
             this.activeSockets = this.activeSockets.filter(
               existingSocket => existingSocket !== socket.id
