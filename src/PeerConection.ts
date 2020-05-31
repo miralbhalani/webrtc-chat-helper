@@ -64,6 +64,8 @@ export class PeerConnection {
     var _self = this;
     this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event: any) {
       // const peerConnection = event.target;
+      console.log('listenICECANDIDATE > ', event)
+      console.log('listenICECANDIDATE > 1', event.candidate, _self.socketId)
       const iceCandidate = event.candidate;
       iceCandidateListenCb(iceCandidate, _self.socketId);
     });

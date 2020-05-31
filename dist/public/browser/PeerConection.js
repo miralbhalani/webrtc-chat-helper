@@ -85,6 +85,8 @@ define(["require", "exports"], function (require, exports) {
             var _self = this;
             this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event) {
                 // const peerConnection = event.target;
+                console.log('listenICECANDIDATE > ', event);
+                console.log('listenICECANDIDATE > 1', event.candidate, _self.socketId);
                 var iceCandidate = event.candidate;
                 iceCandidateListenCb(iceCandidate, _self.socketId);
             });
