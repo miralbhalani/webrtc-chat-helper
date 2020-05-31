@@ -23,7 +23,9 @@ export class ServerIO {
     
             socket.emit("my-socket-id", socket.id);
             
-
+            socket.emit("update-user-list", {
+              users: this.activeSockets
+            });
             socket.broadcast.emit("update-user-list", {
               users: this.activeSockets
             });

@@ -18,6 +18,9 @@ var ServerIO = /** @class */ (function () {
             if (!existingSocket) {
                 _this.activeSockets.push(socket.id);
                 socket.emit("my-socket-id", socket.id);
+                socket.emit("update-user-list", {
+                    users: _this.activeSockets
+                });
                 socket.broadcast.emit("update-user-list", {
                     users: _this.activeSockets
                 });
