@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "It is a library, which has basic and simple interface to implement werbrtc connection between multiple sockets",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {},
   "dependencies": {
     "@types/socket.io": "^2.1.8",
