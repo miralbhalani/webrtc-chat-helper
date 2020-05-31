@@ -21,6 +21,9 @@ export class ServerIO {
           if (!existingSocket) {
             this.activeSockets.push(socket.id);
     
+            socket.emit("my-socket-id", socket.id);
+            
+
             socket.broadcast.emit("update-user-list", {
               users: this.activeSockets
             });

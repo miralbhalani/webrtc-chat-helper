@@ -6,7 +6,7 @@ export { PeerConnection } from "./PeerConection";
 
 export class Chat {
 
-
+    mySocketId: string;
     static getLocalStream() {
         return PeerConnection.stream;
     }
@@ -20,6 +20,9 @@ export class Chat {
 
     watchOnSocketIds(socketIdsChangeCB: Function) {
         this.socket.on("update-user-list", ({ users }: any) => {
+            users = users.filter((_user) => {
+                _user != this.mySocketId
+            })
             socketIdsChangeCB(users);
         });
     }
@@ -28,6 +31,10 @@ export class Chat {
         this.socket.on("add-icecandidate", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
             peerConnectionM.addIceCandidate(data.iceCandidate);
+        });
+
+        this.socket.on("my-socket-id", async (mySocketId: any) => {
+            this.mySocketId = mySocketId
         });
 
         this.socket.on("call-made", async (data: any) => {

@@ -59,8 +59,12 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
             this.attachBasicIosToSocket();
         };
         Chat.prototype.watchOnSocketIds = function (socketIdsChangeCB) {
+            var _this = this;
             this.socket.on("update-user-list", function (_a) {
                 var users = _a.users;
+                users = users.filter(function (_user) {
+                    _user != _this.mySocketId;
+                });
                 socketIdsChangeCB(users);
             });
         };
@@ -71,6 +75,12 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                 return __generator(this, function (_a) {
                     peerConnectionM = PeerConection_1.PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
                     peerConnectionM.addIceCandidate(data.iceCandidate);
+                    return [2 /*return*/];
+                });
+            }); });
+            this.socket.on("my-socket-id", function (mySocketId) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    this.mySocketId = mySocketId;
                     return [2 /*return*/];
                 });
             }); });

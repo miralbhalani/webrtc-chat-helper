@@ -17,6 +17,7 @@ var ServerIO = /** @class */ (function () {
             var existingSocket = _this.activeSockets.find(function (existingSocket) { return existingSocket === socket.id; });
             if (!existingSocket) {
                 _this.activeSockets.push(socket.id);
+                socket.emit("my-socket-id", socket.id);
                 socket.broadcast.emit("update-user-list", {
                     users: _this.activeSockets
                 });
