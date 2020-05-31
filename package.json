@@ -1,8 +1,9 @@
 {
-  "name": "socketproject",
+  "name": "webrtc-chat-helper",
   "version": "1.0.0",
-  "description": "",
+  "description": "It is a library, which has basic and simple interface to implement werbrtc connection between multiple sockets",
   "main": "index.js",
+  "devDependencies": {},
   "dependencies": {
     "@types/socket.io": "^2.1.8",
     "@types/socket.io-client": "^1.4.33"
@@ -15,6 +16,16 @@
     "build": "tsc && tsc --project tsconfig.node.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miralbhalani/webrtc-chat-helper.git"
+  },
+  "author": "miralbhalani <miralbhalani@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miralbhalani/webrtc-chat-helper/issues"
+  },
+  "homepage": "https://github.com/miralbhalani/webrtc-chat-helper#readme",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }
