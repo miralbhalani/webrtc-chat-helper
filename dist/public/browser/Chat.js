@@ -101,6 +101,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                                 to: data.socket
                             });
                             peerConnectionM.onRemoteTrack(function (stream) {
+                                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket);
                                 _this.onRemoteTrackCb(stream, data.socket);
                             });
                             return [2 /*return*/];

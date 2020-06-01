@@ -49,6 +49,7 @@ export class Chat {
             });
 
             peerConnectionM.onRemoteTrack((stream) => {
+                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket)
                 this.onRemoteTrackCb(stream, data.socket)
             });
         });
