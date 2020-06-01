@@ -32,7 +32,7 @@ export class PeerConnection {
     return "remote-video-"+socketId
   }
 
-
+  isIceCandidateSet: boolean = false
   peerConnection: any
   socketId: string
   constructor(_socketId: string) {
@@ -64,16 +64,15 @@ export class PeerConnection {
     var _self = this;
     this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event: any) {
       // const peerConnection = event.target;
-      console.log('listenICECANDIDATE > ', event)
-      console.log('listenICECANDIDATE > 1', event.candidate, _self.socketId)
       const iceCandidate = event.candidate;
       iceCandidateListenCb(iceCandidate, _self.socketId);
     });
   }
 
   async addIceCandidate(iceCandidate: any) {
-    console.log("------------------------ add ice candidate TO", iceCandidate)
-    if(iceCandidate) {
+    if(iceCandidate && !this.isIceCandidateSet) {
+      this.isIceCandidateSet = true;
+      console.log("------------------------ add ice candidate TO", iceCandidate)
       const newIceCandidate = new RTCIceCandidate(iceCandidate);
       return this.peerConnection.addIceCandidate(newIceCandidate)
     }

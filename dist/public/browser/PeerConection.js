@@ -42,6 +42,7 @@ define(["require", "exports"], function (require, exports) {
     var PeerConnection = /** @class */ (function () {
         function PeerConnection(_socketId) {
             var _this = this;
+            this.isIceCandidateSet = false;
             this.peerConnection = new RTCPeerConnection();
             this.socketId = _socketId;
             var _self = this;
@@ -85,8 +86,6 @@ define(["require", "exports"], function (require, exports) {
             var _self = this;
             this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event) {
                 // const peerConnection = event.target;
-                console.log('listenICECANDIDATE > ', event);
-                console.log('listenICECANDIDATE > 1', event.candidate, _self.socketId);
                 var iceCandidate = event.candidate;
                 iceCandidateListenCb(iceCandidate, _self.socketId);
             });
@@ -95,8 +94,9 @@ define(["require", "exports"], function (require, exports) {
             return __awaiter(this, void 0, void 0, function () {
                 var newIceCandidate;
                 return __generator(this, function (_a) {
-                    console.log("------------------------ add ice candidate TO", iceCandidate);
-                    if (iceCandidate) {
+                    if (iceCandidate && !this.isIceCandidateSet) {
+                        this.isIceCandidateSet = true;
+                        console.log("------------------------ add ice candidate TO", iceCandidate);
                         newIceCandidate = new RTCIceCandidate(iceCandidate);
                         return [2 /*return*/, this.peerConnection.addIceCandidate(newIceCandidate)];
                     }

@@ -20,12 +20,9 @@ export class Chat {
 
     watchOnSocketIds(socketIdsChangeCB: Function) {
         this.socket.on("update-user-list", ({ users }: any) => {
-            console.log('update-user-list > my socketId on userlist', this.mySocketId);
-            console.log('update-user-list > users', users)
             users = users.filter((_user) => {
                 return _user != this.mySocketId
             })
-            console.log('update-user-list > users after', users)
             socketIdsChangeCB(users);
         });
     }
@@ -33,12 +30,10 @@ export class Chat {
     private attachBasicIosToSocket() {
         this.socket.on("add-icecandidate", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
-            console.log('add-icecandidate socket on > ',data)
             peerConnectionM.addIceCandidate(data.iceCandidate);
         });
 
         this.socket.on("my-socket-id", async (mySocketId: any) => {
-            console.log('mySocketId', mySocketId)
             this.mySocketId = mySocketId
         });
 

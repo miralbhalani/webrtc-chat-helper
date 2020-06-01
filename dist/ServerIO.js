@@ -34,7 +34,6 @@ var ServerIO = /** @class */ (function () {
                 // });
             }
             socket.on("call-user", function (data) {
-                console.log('In call-user', data, socket.id);
                 socket.to(data.to).emit("call-made", {
                     offer: data.offer,
                     socket: socket.id
@@ -42,7 +41,6 @@ var ServerIO = /** @class */ (function () {
             });
             socket.on("call-add-icecandidate", function (data) {
                 if (data.iceCandidate) {
-                    console.log('call-add-icecandidate', data.to);
                     socket.to(data.to).emit("add-icecandidate", {
                         iceCandidate: data.iceCandidate,
                         socket: socket.id
@@ -61,10 +59,7 @@ var ServerIO = /** @class */ (function () {
                 });
             });
             socket.on("disconnect", function () {
-                console.log('disconnect > socketId -- -- ', socket.id);
-                console.log('disconnect > this.activeSockets', _this.activeSockets);
                 _this.activeSockets = _this.activeSockets.filter(function (existingSocket) { return existingSocket !== socket.id; });
-                console.log('disconnect > this.activeSockets after', _this.activeSockets);
                 socket.broadcast.emit("update-user-list", {
                     users: _this.activeSockets
                 });
