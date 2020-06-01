@@ -7,6 +7,7 @@ export { PeerConnection } from "./PeerConection";
 export class Chat {
 
     mySocketId: string;
+    onRemoteTrackCb: Function;
     static getLocalStream() {
         return PeerConnection.stream;
     }
@@ -46,6 +47,10 @@ export class Chat {
                 answer,
                 to: data.socket
             });
+
+            peerConnectionM.onRemoteTrack((stream) => {
+                this.onRemoteTrackCb(stream, data.socket)
+            });
         });
 
         this.socket.on("answer-made", async (data: any) => {
@@ -75,7 +80,6 @@ export class Chat {
 
     private iceCandidateListenCb = (iceCandidate: any, socketId: string) => {
 
-        console.log('--------------------From ice candidate', iceCandidate, socketId);
         this.socket.emit("call-add-icecandidate", {
             iceCandidate,
             to: socketId
@@ -90,7 +94,18 @@ export class Chat {
             offer,
             to: socketId
         });
+
+        
+        // const remoteVideo = document.getElementById(PeerConnection.getVideoElementID(socketId));
+        //     if (remoteVideo) {
+        //         remoteVideo.srcObject = stream;
+        //     }
         return peerConnectionM;
+    }
+
+    
+    onRemoteTrack(_onRemoteTrackCb) {
+        this.onRemoteTrackCb = _onRemoteTrackCb;
     }
 
 

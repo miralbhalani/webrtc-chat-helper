@@ -76,7 +76,6 @@ export class PeerConnection {
   async addIceCandidate(iceCandidate: any) {
     if(iceCandidate && !this.isIceCandidateSet) {
       this.isIceCandidateSet = true;
-      console.log("------------------------ add ice candidate TO", iceCandidate)
       const newIceCandidate = new RTCIceCandidate(iceCandidate);
       return this.peerConnection.addIceCandidate(newIceCandidate)
     }

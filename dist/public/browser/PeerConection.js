@@ -100,7 +100,6 @@ define(["require", "exports"], function (require, exports) {
                 return __generator(this, function (_a) {
                     if (iceCandidate && !this.isIceCandidateSet) {
                         this.isIceCandidateSet = true;
-                        console.log("------------------------ add ice candidate TO", iceCandidate);
                         newIceCandidate = new RTCIceCandidate(iceCandidate);
                         return [2 /*return*/, this.peerConnection.addIceCandidate(newIceCandidate)];
                     }

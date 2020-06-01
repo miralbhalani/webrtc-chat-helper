@@ -44,7 +44,6 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
         function Chat() {
             var _this = this;
             this.iceCandidateListenCb = function (iceCandidate, socketId) {
-                console.log('--------------------From ice candidate', iceCandidate, socketId);
                 _this.socket.emit("call-add-icecandidate", {
                     iceCandidate: iceCandidate,
                     to: socketId
@@ -87,6 +86,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
             }); });
             this.socket.on("call-made", function (data) { return __awaiter(_this, void 0, void 0, function () {
                 var peerConnectionM, answer;
+                var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -99,6 +99,9 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                             this.socket.emit("make-answer", {
                                 answer: answer,
                                 to: data.socket
+                            });
+                            peerConnectionM.onRemoteTrack(function (stream) {
+                                _this.onRemoteTrackCb(stream, data.socket);
                             });
                             return [2 /*return*/];
                     }
@@ -144,10 +147,17 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                                 offer: offer,
                                 to: socketId
                             });
+                            // const remoteVideo = document.getElementById(PeerConnection.getVideoElementID(socketId));
+                            //     if (remoteVideo) {
+                            //         remoteVideo.srcObject = stream;
+                            //     }
                             return [2 /*return*/, peerConnectionM];
                     }
                 });
             });
+        };
+        Chat.prototype.onRemoteTrack = function (_onRemoteTrackCb) {
+            this.onRemoteTrackCb = _onRemoteTrackCb;
         };
         return Chat;
     }());
