@@ -40,18 +40,24 @@ export class Chat {
 
         this.socket.on("call-made", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+            console.log('onRemoteTrack added to', data.socket);
+            peerConnectionM.onRemoteTrack((stream) => {
+                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket)
+                this.onRemoteTrackCb(stream, data.socket)
+            });
+            
+            
             const answer = await peerConnectionM.setDescriptionAndGetAnswer(data.offer);
             console.log('call-made offer TO', data.offer);
             console.log('call-made answer TO', answer)
+            
+            
             this.socket.emit("make-answer", {
                 answer,
                 to: data.socket
             });
 
-            peerConnectionM.onRemoteTrack((stream) => {
-                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket)
-                this.onRemoteTrackCb(stream, data.socket)
-            });
+            
         });
 
         this.socket.on("answer-made", async (data: any) => {

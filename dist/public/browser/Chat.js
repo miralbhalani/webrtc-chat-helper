@@ -91,6 +91,11 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                     switch (_a.label) {
                         case 0:
                             peerConnectionM = PeerConection_1.PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+                            console.log('onRemoteTrack added to', data.socket);
+                            peerConnectionM.onRemoteTrack(function (stream) {
+                                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket);
+                                _this.onRemoteTrackCb(stream, data.socket);
+                            });
                             return [4 /*yield*/, peerConnectionM.setDescriptionAndGetAnswer(data.offer)];
                         case 1:
                             answer = _a.sent();
@@ -99,10 +104,6 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                             this.socket.emit("make-answer", {
                                 answer: answer,
                                 to: data.socket
-                            });
-                            peerConnectionM.onRemoteTrack(function (stream) {
-                                console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket);
-                                _this.onRemoteTrackCb(stream, data.socket);
                             });
                             return [2 /*return*/];
                     }
