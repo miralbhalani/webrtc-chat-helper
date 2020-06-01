@@ -76,6 +76,8 @@ export class Chat {
     }
 
     private iceCandidateListenCb = (iceCandidate: any, socketId: string) => {
+
+        console.log('--------------------From ice candidate', iceCandidate, socketId);
         this.socket.emit("call-add-icecandidate", {
             iceCandidate,
             to: socketId

@@ -44,6 +44,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
         function Chat() {
             var _this = this;
             this.iceCandidateListenCb = function (iceCandidate, socketId) {
+                console.log('--------------------From ice candidate', iceCandidate, socketId);
                 _this.socket.emit("call-add-icecandidate", {
                     iceCandidate: iceCandidate,
                     to: socketId

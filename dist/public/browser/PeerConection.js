@@ -95,7 +95,7 @@ define(["require", "exports"], function (require, exports) {
             return __awaiter(this, void 0, void 0, function () {
                 var newIceCandidate;
                 return __generator(this, function (_a) {
-                    console.log("icecandidate --- -- ", iceCandidate);
+                    console.log("------------------------ add ice candidate TO", iceCandidate);
                     if (iceCandidate) {
                         newIceCandidate = new RTCIceCandidate(iceCandidate);
                         return [2 /*return*/, this.peerConnection.addIceCandidate(newIceCandidate)];
