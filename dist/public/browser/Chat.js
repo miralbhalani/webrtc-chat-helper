@@ -94,6 +94,8 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                             return [4 /*yield*/, peerConnectionM.setDescriptionAndGetAnswer(data.offer)];
                         case 1:
                             answer = _a.sent();
+                            console.log('call-made offer TO', data.offer);
+                            console.log('call-made answer TO', answer);
                             this.socket.emit("make-answer", {
                                 answer: answer,
                                 to: data.socket
@@ -108,6 +110,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                     switch (_a.label) {
                         case 0:
                             peerConnectionM = PeerConection_1.PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+                            console.log('answer-made from >', data.answer);
                             return [4 /*yield*/, peerConnectionM.setRemoteDescription(data.answer)];
                         case 1:
                             _a.sent();

@@ -40,6 +40,8 @@ export class Chat {
         this.socket.on("call-made", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
             const answer = await peerConnectionM.setDescriptionAndGetAnswer(data.offer);
+            console.log('call-made offer TO', data.offer);
+            console.log('call-made answer TO', answer)
             this.socket.emit("make-answer", {
                 answer,
                 to: data.socket
@@ -48,6 +50,7 @@ export class Chat {
 
         this.socket.on("answer-made", async (data: any) => {
             let peerConnectionM = PeerConnection.getPeerConnection(data.socket, this.iceCandidateListenCb);
+            console.log('answer-made from >', data.answer)
             await peerConnectionM.setRemoteDescription(data.answer);
         });
 
