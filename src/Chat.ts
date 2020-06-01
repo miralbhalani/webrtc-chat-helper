@@ -7,7 +7,8 @@ export { PeerConnection } from "./PeerConection";
 export class Chat {
 
     mySocketId: string;
-    onRemoteTrackCb: Function;
+    onStreamOfIncomingCallCb: Function;
+    onStreamOfOutgoingCallCb: Function;
     static getLocalStream() {
         return PeerConnection.stream;
     }
@@ -43,7 +44,7 @@ export class Chat {
             console.log('onRemoteTrack added to', data.socket);
             peerConnectionM.onRemoteTrack((stream) => {
                 console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket)
-                this.onRemoteTrackCb(stream, data.socket)
+                this.onStreamOfIncomingCallCb(stream, data.socket)
             });
             
             
@@ -96,6 +97,10 @@ export class Chat {
     async callToSocket(socketId: any) {
 
         let peerConnectionM = PeerConnection.getPeerConnection(socketId, this.iceCandidateListenCb);
+        peerConnectionM.onRemoteTrack((stream) => {
+            this.onStreamOfOutgoingCallCb(stream, socketId)
+        });
+        
         const offer = await peerConnectionM.createOfferAndSetDescription();
         this.socket.emit("call-user", {
             offer,
@@ -104,15 +109,19 @@ export class Chat {
 
         
         // const remoteVideo = document.getElementById(PeerConnection.getVideoElementID(socketId));
-        //     if (remoteVideo) {
-        //         remoteVideo.srcObject = stream;
-        //     }
+        // if (remoteVideo) {
+        //     remoteVideo.srcObject = stream;
+        // }
         return peerConnectionM;
     }
 
     
-    onRemoteTrack(_onRemoteTrackCb) {
-        this.onRemoteTrackCb = _onRemoteTrackCb;
+    streamOfIncomingCall(_onStreamOfIncomingCallCb) {
+        this.onStreamOfIncomingCallCb = _onStreamOfIncomingCallCb;
+    }
+
+    streamOfOutgoingCall(_onStreamOfOutgoingCallCb) {
+        this.onStreamOfOutgoingCallCb = _onStreamOfOutgoingCallCb;
     }
 
 

@@ -94,7 +94,7 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                             console.log('onRemoteTrack added to', data.socket);
                             peerConnectionM.onRemoteTrack(function (stream) {
                                 console.log(';;;;;;;;;;;;;;;;; > ', stream, data.socket);
-                                _this.onRemoteTrackCb(stream, data.socket);
+                                _this.onStreamOfIncomingCallCb(stream, data.socket);
                             });
                             return [4 /*yield*/, peerConnectionM.setDescriptionAndGetAnswer(data.offer)];
                         case 1:
@@ -138,10 +138,14 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
         Chat.prototype.callToSocket = function (socketId) {
             return __awaiter(this, void 0, void 0, function () {
                 var peerConnectionM, offer;
+                var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             peerConnectionM = PeerConection_1.PeerConnection.getPeerConnection(socketId, this.iceCandidateListenCb);
+                            peerConnectionM.onRemoteTrack(function (stream) {
+                                _this.onStreamOfOutgoingCallCb(stream, socketId);
+                            });
                             return [4 /*yield*/, peerConnectionM.createOfferAndSetDescription()];
                         case 1:
                             offer = _a.sent();
@@ -150,16 +154,19 @@ define(["require", "exports", "./PeerConection", "./PeerConection"], function (r
                                 to: socketId
                             });
                             // const remoteVideo = document.getElementById(PeerConnection.getVideoElementID(socketId));
-                            //     if (remoteVideo) {
-                            //         remoteVideo.srcObject = stream;
-                            //     }
+                            // if (remoteVideo) {
+                            //     remoteVideo.srcObject = stream;
+                            // }
                             return [2 /*return*/, peerConnectionM];
                     }
                 });
             });
         };
-        Chat.prototype.onRemoteTrack = function (_onRemoteTrackCb) {
-            this.onRemoteTrackCb = _onRemoteTrackCb;
+        Chat.prototype.streamOfIncomingCall = function (_onStreamOfIncomingCallCb) {
+            this.onStreamOfIncomingCallCb = _onStreamOfIncomingCallCb;
+        };
+        Chat.prototype.streamOfOutgoingCall = function (_onStreamOfOutgoingCallCb) {
+            this.onStreamOfOutgoingCallCb = _onStreamOfOutgoingCallCb;
         };
         return Chat;
     }());
