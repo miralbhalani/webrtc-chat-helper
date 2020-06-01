@@ -32,6 +32,7 @@ export class PeerConnection {
     return "remote-video-"+socketId
   }
 
+  iceCandidateCallBackMade: boolean = false
   isIceCandidateSet: boolean = false
   peerConnection: any
   socketId: string
@@ -65,7 +66,10 @@ export class PeerConnection {
     this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event: any) {
       // const peerConnection = event.target;
       const iceCandidate = event.candidate;
-      iceCandidateListenCb(iceCandidate, _self.socketId);
+      if(!this.iceCandidateCallBackMade) {
+        this.iceCandidateCallBackMade = true;
+        iceCandidateListenCb(iceCandidate, _self.socketId);
+      }
     });
   }
 

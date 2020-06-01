@@ -42,6 +42,7 @@ define(["require", "exports"], function (require, exports) {
     var PeerConnection = /** @class */ (function () {
         function PeerConnection(_socketId) {
             var _this = this;
+            this.iceCandidateCallBackMade = false;
             this.isIceCandidateSet = false;
             this.peerConnection = new RTCPeerConnection();
             this.socketId = _socketId;
@@ -87,7 +88,10 @@ define(["require", "exports"], function (require, exports) {
             this.peerConnection.addEventListener('icecandidate', function handleConnectionLocal(event) {
                 // const peerConnection = event.target;
                 var iceCandidate = event.candidate;
-                iceCandidateListenCb(iceCandidate, _self.socketId);
+                if (!this.iceCandidateCallBackMade) {
+                    this.iceCandidateCallBackMade = true;
+                    iceCandidateListenCb(iceCandidate, _self.socketId);
+                }
             });
         };
         PeerConnection.prototype.addIceCandidate = function (iceCandidate) {
