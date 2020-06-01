@@ -4,7 +4,7 @@ It is a library, which has basic and simple interface to implement werbrtc conne
 NOTE: if you don't want to follow the steps. below is the readymade example
 https://github.com/miralbhalani/webrtc-multiscreen-chat-demo
 just clone it and write
-npm install
+npm install &&
 npm start
 
 
